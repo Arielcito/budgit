@@ -1,11 +1,7 @@
-import DeployButton from "@/components/DeployButton";
-import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
-import Header from "@/components/Header";
 import { redirect } from "next/navigation";
-import Footer from "@/components/Footer";
 import { Database } from "@/types/supabase";
+import { Navbar } from "@/components/Navbar";
 
 type Expenses = Database['public']['Tables']['expenses']['Row']
 
@@ -24,10 +20,9 @@ export default async function ProtectedPage() {
   const { data: expenses } = await supabase.from("expenses").select();
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen relative w-full pb-20 max-w-lg">
+    <div className="flex items-center bg-gray-50 dark:bg-gray-900 min-h-screen relative w-full pb-20 max-w-lg">
       <ExpenseHistory expenses={expenses || []} />
-      <AddExpenseButton />
-      <Footer />
+      <Navbar />
     </div>
   );
 }
@@ -65,10 +60,3 @@ const ExpenseHistory = ({ expenses }: { expenses: Expenses[] }) => {
   );
 };
 
-const AddExpenseButton = () => {
-  return (
-    <button className="w-full p-4 bg-blue-500 text-white mt-4">
-      Add New Expense
-    </button>
-  );
-};
